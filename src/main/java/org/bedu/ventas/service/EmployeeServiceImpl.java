@@ -1,4 +1,4 @@
-package org.bedu.ventas.service.impl;
+package org.bedu.ventas.service;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -7,9 +7,9 @@ import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
-import org.bedu.ventas.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+@Service
 public class EmployeeServiceImpl implements EmployeeService  {
 
     @Autowired
