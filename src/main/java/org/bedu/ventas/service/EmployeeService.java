@@ -5,6 +5,8 @@ import org.bedu.ventas.dto.EmployeeDTO;
 
 public interface EmployeeService {
 
-    public List<EmployeeDTO> getEmployees();
+    public List<EmployeeDTO> findAll();
+    public EmployeeDTO getEmployee(long employeeid);
+
 
 }

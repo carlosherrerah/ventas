@@ -1,6 +1,7 @@
 package org.bedu.ventas.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.LinkedList;
 
 import org.bedu.ventas.dto.EmployeeDTO;
@@ -9,8 +10,9 @@ import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
-public class EmployeeServiceImpl implements EmployeeService  {
+public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -19,16 +21,18 @@ public class EmployeeServiceImpl implements EmployeeService  {
     private EmployeeMapper employeeMapper;
 
     @Override
-    public List<EmployeeDTO> getEmployees() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<EmployeeDTO> data = new LinkedList<>();
-        
-        for (Employee emp: employees) {
-            data.add(employeeMapper.toDTO(emp));
-        }
+    public List<EmployeeDTO> findAll() {
+        List<Employee> data = employeeRepository.findAll(); // Truena
+        return data.stream().map(employeeMapper::toDTO).toList();
+    }
 
-        return data;
-        //throw new UnsupportedOperationException("Unimplemented method 'getEmployees'");
+    @Override
+    public EmployeeDTO getEmployee(long employeeid) {
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeid);
+        return optionalEmployee.stream().map(employeeMapper::toDTO).toList().get(0);
+        //return employeeDTO;
     }
     
+
 }
