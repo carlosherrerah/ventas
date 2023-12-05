@@ -6,7 +6,6 @@ import org.bedu.ventas.dto.OrderDTO;
 import org.bedu.ventas.model.Order;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 @Mapper(
@@ -14,8 +13,7 @@ import org.mapstruct.Named;
     injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface OrderMapper {
-  
-    @Mapping(target = "employee.orders", ignore = true)
+
     //@Mapping(source = "employee", target = "employee", qualifiedByName = "toEmployeeDTO")
     OrderDTO toDTO(Order model);
 

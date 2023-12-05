@@ -19,7 +19,8 @@ public interface EmployeeMapper {
 
     @Mapping(source = "orders", target = "orders", qualifiedByName = "ordersDTOList")
     EmployeeWithOrdersDTO toDTOWithOrders(Employee model);
-
+    
+    @Mapping(target = "orders", ignore = true)
     Employee toModel(EmployeeDTO dto);
 }
  
