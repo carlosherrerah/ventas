@@ -2,6 +2,7 @@ package org.bedu.ventas.controller;
 
 import java.util.*;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,11 @@ public class EmployeeController {
         return employeeDTO;
     }
 
+    @GetMapping("/{employeeId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) {
+        return employeeService.findByIdWithOrders(employeeId);
+    }
     
     @GetMapping("saludo")
     public String all(){

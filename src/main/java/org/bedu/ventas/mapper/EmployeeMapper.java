@@ -4,6 +4,7 @@ package org.bedu.ventas.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.model.Employee;
 import org.mapstruct.InjectionStrategy;
 
@@ -14,11 +15,11 @@ import org.mapstruct.InjectionStrategy;
 )
 public interface EmployeeMapper {
  
-    //@Mapping(source = "id", target = "employeeid")
-    @Mapping(source = "orders", target = "orders", qualifiedByName = "ordersDTOList")
     EmployeeDTO toDTO(Employee model);
 
-    //@Mapping(source = "employeeid", target = "id", ignore = false)
+    @Mapping(source = "orders", target = "orders", qualifiedByName = "ordersDTOList")
+    EmployeeWithOrdersDTO toDTOWithOrders(Employee model);
+
     Employee toModel(EmployeeDTO dto);
 }
  
