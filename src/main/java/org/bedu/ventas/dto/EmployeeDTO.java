@@ -1,5 +1,7 @@
 package org.bedu.ventas.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -14,4 +16,6 @@ public class EmployeeDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private String hiredate;
+
+    private List<OrderDTO> orders;
 }
