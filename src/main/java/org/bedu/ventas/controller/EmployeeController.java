@@ -2,10 +2,12 @@ package org.bedu.ventas.controller;
 
 import java.util.*;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +21,29 @@ public class EmployeeController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<EmployeeDTO> getAll() {
-        return employeeService.getEmployees();
+    public List<EmployeeDTO> findAll() {
+        return employeeService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public EmployeeDTO getEmployee(@PathVariable Long id ) {
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO = employeeService.getEmployee(id);
+        return employeeDTO;
+    }
+
+    @GetMapping("/{employeeId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) {
+        return employeeService.findByIdWithOrders(employeeId);
     }
     
+    @GetMapping("saludo")
+    public String all(){
+        return "Hello world";
+    }
+
+
     /*
      * @GetMapping("/{id}")
      * private Employee getEmpleadoById(@PathVariable long id) {
