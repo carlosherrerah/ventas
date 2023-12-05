@@ -1,6 +1,8 @@
 package org.bedu.ventas.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +21,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeid")
-    private Long Id;
+    private Long employeeid;
 
     @NotBlank(message = "No puede estar vacio")
     private String lastname;
@@ -30,4 +32,6 @@ public class Employee implements Serializable {
 
     private Date hiredate;
     
+    @OneToMany(mappedBy = "employee")
+    private List<Order> orders = new ArrayList<>();
 }
