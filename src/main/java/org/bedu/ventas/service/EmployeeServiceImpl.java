@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.LinkedList;
 
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
@@ -24,6 +25,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDTO> findAll() {
         List<Employee> data = employeeRepository.findAll(); // Truena
         return data.stream().map(employeeMapper::toDTO).toList();
+    }
+
+    @Override
+    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+        return optionalEmployee.isPresent() ? optionalEmployee.map(employeeMapper::toDTOWithOrders).get() : new EmployeeWithOrdersDTO();
     }
 
     @Override
