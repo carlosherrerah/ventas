@@ -11,6 +11,6 @@ public interface EmployeeService {
     public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId);
 
     public EmployeeDTO getEmployee(long employeeid);
-
+    public void deleteEmployee(long employeeid);
 
 }

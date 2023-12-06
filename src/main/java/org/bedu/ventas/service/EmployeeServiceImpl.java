@@ -40,6 +40,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return optionalEmployee.stream().map(employeeMapper::toDTO).toList().get(0);
         //return employeeDTO;
     }
+    //delete
+    @Override
+    public void deleteEmployee(long employeeid) {
+        employeeRepository.deleteById(employeeid);
+    }
+    
     
 
 }
