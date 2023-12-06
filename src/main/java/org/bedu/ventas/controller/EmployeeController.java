@@ -20,7 +20,12 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-    
+
+    @GetMapping("saludo")
+    public String all() {
+        return "Hello world Cruelzote";
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeDTO> findAll() {
@@ -28,23 +33,18 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public EmployeeDTO getEmployee(@PathVariable Long id ) {
+    public EmployeeDTO getEmployee(@PathVariable Long id) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO = employeeService.getEmployee(id);
         return employeeDTO;
     }
 
-    @GetMapping("saludo")
-    public String all(){
-        return "Hello world Cruelzote";
-    }
-    //Delete mapping
+    // Delete mapping
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployee(@PathVariable Long id){
+    public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
     }
-
 
     /*
      * @GetMapping("/{id}")
