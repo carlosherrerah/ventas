@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
+import org.bedu.ventas.dto.UpdateEmployeeDTO;
+import org.bedu.ventas.exception.EmployeeNotFoundException;
 import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
@@ -45,7 +47,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(long employeeid) {
         employeeRepository.deleteById(employeeid);
     }
-    
-    
 
+
+    //update
+    @Override
+    public void update (long employeeid, UpdateEmployeeDTO data) throws EmployeeNotFoundException {
+        Optional<Employee> result = employeeRepository.findById(employeeid);
+
+        if (!result.isPresent()){
+            throw new EmployeeNotFoundException(employeeid);
+        }
+
+        Employee employee = result.get();
+
+        employeeMapper.update(employee, data);
+
+        employeeRepository.save(employee);
+    }
 }

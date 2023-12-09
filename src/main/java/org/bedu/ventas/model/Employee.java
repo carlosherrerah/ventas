@@ -34,4 +34,8 @@ public class Employee implements Serializable {
     
     @OneToMany(mappedBy = "employee")
     private List<Order> orders = new ArrayList<>();
+
+    private List<Employee> employees = new ArrayList<>();
+
+
 }
