@@ -2,6 +2,7 @@ package org.bedu.ventas.controller;
 
 import java.util.List;
 
+import org.bedu.ventas.dto.CreateOrderDTO;
 import org.bedu.ventas.dto.OrderDTO;
 import org.bedu.ventas.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Tag(name = "Endpoints de ordenes de compra", description = "CRUD de ordenes de compra")
 @RestController
@@ -34,4 +40,11 @@ public class OrderController {
     public OrderDTO findById(@PathVariable long orderId) {
         return orderService.findById(orderId);
     }
+
+    @Operation(summary = "Guarda una orden de compra")
+    @PostMapping()
+    public OrderDTO save(@Valid @RequestBody CreateOrderDTO entity) {        
+        return orderService.save(entity);
+    }
+    
 }
