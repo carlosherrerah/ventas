@@ -1,5 +1,6 @@
 package org.bedu.ventas.dto;
 
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -14,9 +15,7 @@ public class UpdateEmployeeDTO {
     @NotBlank
     private String firstname;
 
-
     private Date birthdate;
-
 
     private Date hiredate;
 }

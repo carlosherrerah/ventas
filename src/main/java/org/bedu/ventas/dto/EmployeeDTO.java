@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class EmployeeDTO {
-    private Long employeeid;
+    private long employeeid;
     private String lastname;
     private String firstname;
     

@@ -43,7 +43,7 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
     }
 
-    @PutMapping("{employeeid}")
+    @PutMapping("/{employeeid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update (@PathVariable long employeeid, @Valid @RequestBody UpdateEmployeeDTO data) throws EmployeeNotFoundException {
         employeeService.update(employeeid, data);
