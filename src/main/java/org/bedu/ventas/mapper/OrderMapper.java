@@ -25,22 +25,4 @@ public interface OrderMapper {
             .peek(dto -> dto.setEmployee(null))
             .toList();
     }
-
-
-    /*@Named("toEmployeeDTO")
-    default EmployeeDTO toEmployeeDTO(Employee model) {
-        if (model == null) {
-            return null;
-        }
-
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployeeid(model.getId());
-        employeeDTO.setFirstname(model.getFirstname());
-        employeeDTO.setLastname(model.getLastname());
-        employeeDTO.setBirthdate(model.getBirthdate().toString());
-        employeeDTO.setHiredate(model.getHiredate().toString());
-        
-        return employeeDTO;
-    }*/
-    Order toModel(OrderDTO dto);
 }
