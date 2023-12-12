@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.bedu.ventas.dto.CreateOrderDTO;
 import org.bedu.ventas.dto.OrderDTO;
+import org.bedu.ventas.dto.UpdateOrderDTO;
 import org.bedu.ventas.mapper.OrderMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.model.Order;
@@ -43,5 +44,24 @@ public class OrderService {
         } else {
             return null;
         }
+    }
+    public OrderDTO update(long orderId, UpdateOrderDTO data) {
+        Optional<Order> result = orderRepository.findById(orderId);
+        
+        if (!result.isPresent()) {
+            return null;
+        }
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(data.getEmployeeid());
+        Order order = result.get();
+        
+        if (!optionalEmployee.isPresent()) {
+            return null;
+        }
+        
+        order.setOrderdate(data.getOrderdate());
+        order.setEmployee(optionalEmployee.get());
+        
+        return orderMapper.toDTO(orderRepository.save(order));
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bedu.ventas.dto.CreateOrderDTO;
 import org.bedu.ventas.dto.OrderDTO;
+import org.bedu.ventas.dto.UpdateOrderDTO;
 import org.bedu.ventas.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -37,14 +39,22 @@ public class OrderController {
 
     @Operation(summary = "Obtiene una orden de compra según su ID")
     @GetMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.OK)
     public OrderDTO findById(@PathVariable long orderId) {
         return orderService.findById(orderId);
     }
 
     @Operation(summary = "Guarda una orden de compra")
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public OrderDTO save(@Valid @RequestBody CreateOrderDTO entity) {        
         return orderService.save(entity);
     }
-    
+
+    @Operation(summary = "Actualiza una orden de compra")
+    @PutMapping("/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public OrderDTO update(@PathVariable long orderId, @Valid @RequestBody UpdateOrderDTO order){
+        return orderService.update(orderId, order);
+    }
 }
