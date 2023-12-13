@@ -2,14 +2,12 @@ package org.bedu.ventas.controller;
 
 import java.util.*;
 import jakarta.validation.Valid;
-import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.service.EmployeeService;
 import org.bedu.ventas.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,7 +35,7 @@ public class EmployeeController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeDTO createEmployee(@Valid @RequestBody CreateEmployeeDTO data){
+    public EmployeeDTO createEmployee(@Valid @RequestBody EmployeeDTO data){
         return service.save(data);
     }
     @GetMapping("/{employeeId}/orders")
@@ -46,7 +44,7 @@ public class EmployeeController {
         return employeeService.findByIdWithOrders(employeeId);
     }
     
-                                      @GetMapping("saludo")
+    @GetMapping("saludo")
     public String all(){
         return "Hello world";
     }

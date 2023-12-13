@@ -2,9 +2,7 @@ package org.bedu.ventas.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.LinkedList;
 
-import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.mapper.EmployeeMapper;
@@ -28,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return data.stream().map(employeeMapper::toDTO).toList();
     }
 
-    public EmployeeDTO save(CreateEmployeeDTO data){
+    public EmployeeDTO save(EmployeeDTO data){
         Employee entity = employeeRepository.save(employeeMapper.toModel(data));
         return employeeMapper.toDTO(entity);
     }
