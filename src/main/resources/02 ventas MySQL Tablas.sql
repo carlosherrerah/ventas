@@ -1,4 +1,5 @@
 -- Base de datos: ventas
+use ventas;
 
 CREATE TABLE employees (
   EmployeeID int(10) AUTO_INCREMENT PRIMARY KEY,
