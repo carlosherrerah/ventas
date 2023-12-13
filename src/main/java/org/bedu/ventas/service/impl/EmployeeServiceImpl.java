@@ -8,7 +8,6 @@ import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
-import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
 import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;

@@ -6,7 +6,6 @@ import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
-import org.springframework.stereotype.Service;
 
 public interface EmployeeService {
 

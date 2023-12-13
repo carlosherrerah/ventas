@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
+@Schema(description = "Modelo UpdateOrderDTO para actualizar una orden de compra")
 @Data
 public class UpdateOrderDTO {
     @Schema(
@@ -18,8 +18,8 @@ public class UpdateOrderDTO {
     @Min(1)
     private long employeeid;
 
-    @Schema(description = "Fecha de orden de compra", example = "2023-12-02")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Schema(description = "Fecha de orden de compra", format = "date-time", pattern = "yyyy-MM-dd")
     @NotNull
     private Date orderdate;
 }
