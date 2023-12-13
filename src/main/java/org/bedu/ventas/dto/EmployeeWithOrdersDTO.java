@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
+@Schema(description = "Modelo EmployeeWithOrdersDTO para obtener un empleado con sus pedidos")
 @Data
 public class EmployeeWithOrdersDTO {
     @Schema(example = "30", description = "Identificador de empleado")

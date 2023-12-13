@@ -2,18 +2,13 @@ package org.bedu.ventas.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bedu.ventas.dto.ErrorDTO;
-import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
 import org.bedu.ventas.exception.RuntimeException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.List;
 
 @Slf4j

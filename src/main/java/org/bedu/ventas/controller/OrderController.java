@@ -30,28 +30,40 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     
-    @Operation(summary = "Obtiene una lista de toda las ordenes de compra", description = "No requiere parámetros")
+    @Operation(summary = "Obtiene una lista de toda las ordenes de compra", description = "No requiere parámetros", responses = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de ordenes de compra")
+    })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDTO> findAll() {
         return orderService.findAll();
     }
 
-    @Operation(summary = "Obtiene una orden de compra según su ID", description = "Agrega el id de la orden de compra a la URL")
+    @Operation(summary = "Obtiene una orden de compra según su ID", description = "Agrega el id de la orden de compra a la URL", responses = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Orden de compra encontrada"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Orden de compra no encontrada")
+    })
     @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDTO findById(@PathVariable long orderId) {
         return orderService.findById(orderId);
     }
 
-    @Operation(summary = "Guarda una orden de compra")
+    @Operation(summary = "Guarda una orden de compra" , description = "Se debe enviar un JSON con los datos de la orden de compra", responses = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Orden de compra guardada correctamente"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "La orden de compra no se pudo guardar correctamente")
+    })
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDTO save(@Valid @RequestBody CreateOrderDTO entity) {        
         return orderService.save(entity);
     }
 
-    @Operation(summary = "Actualiza una orden de compra")
+    @Operation(summary = "Actualiza una orden de compra", description = "Se debe enviar un JSON con los datos de la orden de compra", responses = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Orden de compra actualizada correctamente"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "La orden de compra no se pudo actualizar correctamente"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "La orden de compra no se pudo encontrar")
+    })
     @PutMapping("/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public OrderDTO update(@PathVariable long orderId, @Valid @RequestBody UpdateOrderDTO order){
