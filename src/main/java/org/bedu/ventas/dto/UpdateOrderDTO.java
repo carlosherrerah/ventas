@@ -18,8 +18,8 @@ public class UpdateOrderDTO {
     @Min(1)
     private long employeeid;
 
-    @Schema(description = "Fecha de orden de compra", example = "2023-12-02")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Schema(description = "Fecha de orden de compra", format = "date")
     @NotNull
     private Date orderdate;
 }

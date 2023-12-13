@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Employee", description = "CRUD de empleados")
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -19,30 +23,32 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
     
+    @Operation(summary = "Obtener todos los empleados")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<EmployeeDTO> findAll() {
         return employeeService.findAll();
     }
-
+    @Operation(summary = "Obtener un empleado por id")
     @GetMapping("/{id}")
     public EmployeeDTO getEmployee(@PathVariable Long id ) {
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO = employeeService.getEmployee(id);
         return employeeDTO;
     }
-
+    @Operation(summary = "Hola mundo con swagger")
     @GetMapping("saludo")
     public String all(){
         return "Hello world";
     }
     //Delete mapping
+    @Operation(summary = "Eliminar un empleado por id")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);
     }
-
+    @Operation(summary = "Obtener un empleado con sus ordenes por id")
     @PutMapping("/{employeeid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update (@PathVariable long employeeid, @Valid @RequestBody UpdateEmployeeDTO data) throws EmployeeNotFoundException {

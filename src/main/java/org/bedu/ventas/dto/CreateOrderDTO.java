@@ -7,9 +7,7 @@ import lombok.Data;
 
 @Data
 public class CreateOrderDTO {
-    @Schema(
-        description = "Empleado que realizo la orden de compra"
-    )
+    @Schema(description = "Empleado que realizo la orden de compra")
     @NotNull
     @Min(1)
     private long employeeid;

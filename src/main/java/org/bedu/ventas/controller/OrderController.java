@@ -30,14 +30,14 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     
-    @Operation(summary = "Obtiene una lista de toda las ordenes de compra")
+    @Operation(summary = "Obtiene una lista de toda las ordenes de compra", description = "No requiere parámetros")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDTO> findAll() {
         return orderService.findAll();
     }
 
-    @Operation(summary = "Obtiene una orden de compra según su ID")
+    @Operation(summary = "Obtiene una orden de compra según su ID", description = "Agrega el id de la orden de compra a la URL")
     @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     public OrderDTO findById(@PathVariable long orderId) {
