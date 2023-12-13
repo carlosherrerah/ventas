@@ -9,11 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Data
 public class UpdateEmployeeDTO {
-    @Schema(example = "Macias", description = "Actualizar apellido de empleado")
+
+    @Schema(description = "Apellido del Empleado", example = "Gonzalez")
     @NotBlank
     private String lastname;
-    @Schema(example = "Adrian", description = "Actualizar nombre de empleado")
-    @NotBlank
+
     private String firstname;
     @Schema(example = "1990-01-01", description = "Actualizar fecha de nacimiento", format = "date")
     private Date birthdate;

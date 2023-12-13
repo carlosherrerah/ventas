@@ -1,22 +1,27 @@
 package org.bedu.ventas.dto;
 
+import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 public class EmployeeDTO {
-    @Schema(example = "30", description = "Identificador de empleado")
+
+    @Schema(description = "Identificador del empleado", example = "20")
     private long employeeid;
-    @Schema(example = "López", description = "Apellido del empleado")
+
+    @Schema(description = "Apellido Paterno del Empleado", example = "Gonzalez")
     private String lastname;
-    @Schema(example = "Juan", description = "Nombre del empleado")
+
+    @Schema(description = "Nombre del Empleado", example = "Antonio")
     private String firstname;
-    @Schema(example = "2000-01-01" , description = "Fecha de nacimiento del empleado", format = "date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private String birthdate;
-    @Schema(example = "2023-01-01" , description = "Fecha de contratación del empleado", format = "date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private String hiredate;
+    
+    @Schema(description = "Fecha de Nacimiento", example = "1970-08-25")
+    private Date birthdate;
+
+    @Schema(description = "Fecha de Contratación", example = "2000-10-20")
+    //@JsonFormat(pattern = "yyyy-MM-dd")
+    private Date hiredate;
+    
 }
