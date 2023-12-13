@@ -1,16 +1,16 @@
 package org.bedu.ventas.controller;
 
 import java.util.*;
+import jakarta.validation.Valid;
+import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.service.EmployeeService;
+import org.bedu.ventas.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employees")
@@ -18,6 +18,10 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    //No sé sis esto está bien -mabahi
+    @Autowired
+    private EmployeeServiceImpl service;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -31,14 +35,18 @@ public class EmployeeController {
         employeeDTO = employeeService.getEmployee(id);
         return employeeDTO;
     }
-
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public EmployeeDTO createEmployee(@Valid @RequestBody CreateEmployeeDTO data){
+        return service.save(data);
+    }
     @GetMapping("/{employeeId}/orders")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) {
         return employeeService.findByIdWithOrders(employeeId);
     }
     
-    @GetMapping("saludo")
+                                      @GetMapping("saludo")
     public String all(){
         return "Hello world";
     }

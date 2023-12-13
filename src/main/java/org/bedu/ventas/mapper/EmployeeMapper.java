@@ -14,7 +14,7 @@ import org.mapstruct.InjectionStrategy;
     uses = OrderMapper.class
 )
 public interface EmployeeMapper {
- 
+ @Mapping(target = "employeeid", ignore = true)
     EmployeeDTO toDTO(Employee model);
 
     @Mapping(source = "orders", target = "orders", qualifiedByName = "ordersDTOList")
