@@ -10,6 +10,12 @@ import org.springframework.stereotype.Repository;
 public interface EmployeeRepository  extends JpaRepository<Employee, Long> {
     //List<Employee> findAll();
 /*
+// JPQL
+    // De todas las interpretaciones "i", obten la canción (i.song)
+    // dónde el id del artista (i.artist.id) sea :artistId
+    @Query("SELECT i.song FROM Interpretation i WHERE i.artist.id = :artistId")
+    List<Song> findSongsByArtist(long artistId);
+
     @Query(value = "SELECT new com.perea.pereaapp.dto.GananciasDTO(" +
             "SUM(v.cantidad * (v.precioVenta - v.precioCompra))," +
             "SUM(v.cantidad * v.precioCompra)," +

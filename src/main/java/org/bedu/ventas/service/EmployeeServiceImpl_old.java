@@ -1,0 +1,91 @@
+package org.bedu.ventas.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.LinkedList;
+
+import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
+import org.bedu.ventas.dto.UpdateEmployeeDTO;
+import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
+import org.bedu.ventas.mapper.EmployeeMapper;
+import org.bedu.ventas.model.Employee;
+import org.bedu.ventas.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
+    /*
+    @Autowired
+    private ModelMapper modelMapper;
+    PersonDTO personDTO = modelMapper.map(person, PersonDTO.class);
+    */
+    
+    @Override
+    public List<EmployeeDTO> findAll() {
+        List<Employee> data = employeeRepository.findAll(); // Truena
+        return data.stream().map(employeeMapper::toDTO).toList();
+    }
+
+    @Override
+    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
+        return optionalEmployee.isPresent() ? optionalEmployee.map(employeeMapper::toDTOWithOrders).get()
+                : new EmployeeWithOrdersDTO();
+    }
+
+    @Override
+    public EmployeeDTO getEmployee(long employeeid) {
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeid);
+        return optionalEmployee.stream().map(employeeMapper::toDTO).toList().get(0);
+        // return employeeDTO;
+    }
+
+    // delete
+    @Override
+    public void deleteEmployee(long employeeid) {
+        employeeRepository.deleteById(employeeid);
+    }
+
+    @Override
+    public void update2(long employeeid, EmployeeDTO data) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeid);
+        EmployeeDTO employeeDTO = optionalEmployee.stream().map(employeeMapper::toDTO).toList().get(0);
+        
+        employeeDTO.setLastname(data.getLastname());
+        employeeDTO.setFirstname(data.getFirstname());
+        //employeeDTO.setBirthdate(data.getBirthdate());
+        //employeeDTO.setHiredate(data.getHiredate());
+        
+        Employee employee = employeeMapper.toModel(employeeDTO);
+        //employee.setEmployeeid(employeeid);
+        employeeRepository.save(employee);
+    }
+
+
+    // update
+    @Override
+    public void update(long employeeid, UpdateEmployeeDTO data) {
+        Optional<Employee> result = employeeRepository.findById(employeeid);
+
+        if (!result.isPresent()) {
+            throw new ExcepcionRecursoNoEncontrado(employeeid);
+        }
+
+        Employee employee = result.get();
+
+        employeeMapper.update(employee, data);
+
+        employeeRepository.save(employee);
+    }
+
+}
