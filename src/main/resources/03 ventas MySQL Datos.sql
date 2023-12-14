@@ -1,3 +1,4 @@
+use ventas;
 
 INSERT INTO employees (EmployeeID, LastName, FirstName, BirthDate, HireDate) VALUES
 (1, 'Davolio', 'Nancy', '1968-12-08', '1992-05-01 00:00:00'),
