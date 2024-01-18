@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 
 import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
 import org.bedu.ventas.service.EmployeeService;
@@ -86,4 +87,9 @@ public class EmployeeController {
 
     // @Operation(summary = "Asocia una Orden a un Empleado") Post
     // @Operation(summary = "Obtiene las Ordenes de un Empleado determinado") Get
+    @GetMapping("/{employeeId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) {
+        return employeeService.findByIdWithOrders(employeeId);
+    }
 }
