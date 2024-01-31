@@ -20,32 +20,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
     private EmployeeRepository employeeRepository;
-
-    @Autowired
     private EmployeeMapper employeeMapper;
-
-    @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
+            ModelMapper modelMapper) {
+        this.employeeRepository = employeeRepository;
+        this.employeeMapper = employeeMapper;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public List<EmployeeDTO> findAll() {
         List<Employee> data = employeeRepository.findAll();
-        // return data.stream().map(employeeMapper::toDTO).toList();
         return employeeMapper.toDTO(data);
+
     }
 
     @Override
     public EmployeeDTO getEmployee(long employeeid) throws EmployeeNotFoundException   {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
+        EmployeeDTO employeeDTO;
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeid);
         if (!optionalEmployee.isPresent()) {
             throw new EmployeeNotFoundException(employeeid);
         }
         employeeDTO = employeeMapper.toDTO(optionalEmployee.get());
-        //return optionalEmployee.stream().map(employeeMapper::toDTO).toList().get(0);
         return employeeDTO;
     }
 
@@ -72,7 +73,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     // Insert
     @Transactional
     public EmployeeDTO save(CreateEmployeeDTO data) {
-        // MedicalRecordDTO medicalRecord = medicalRecordService.save();
         Employee model = employeeMapper.toModel(data);
         Employee result = employeeRepository.save(model);
         return employeeMapper.toDTO(result);
@@ -92,10 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId) {
+    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId) throws EmployeeNotFoundException {
+        EmployeeWithOrdersDTO employeeWithOrdersDTO; 
         Optional<Employee> optionalEmployee = employeeRepository.findById(employeeId);
-        return optionalEmployee.isPresent() ? optionalEmployee.map(employeeMapper::toDTOWithOrders).get()
-                : new EmployeeWithOrdersDTO();
+
+        if (!optionalEmployee.isPresent()) {
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        employeeWithOrdersDTO = optionalEmployee.stream().map(employeeMapper::toDTOWithOrders).toList().get(0);
+        return employeeWithOrdersDTO;
     }
 
 }

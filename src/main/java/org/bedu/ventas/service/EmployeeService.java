@@ -21,6 +21,6 @@ public interface EmployeeService {
 
     public void updateParcial(long employeeid, EmployeeDTO data);  // No Funciona 
 
-    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId);
+    public EmployeeWithOrdersDTO findByIdWithOrders(long employeeId) throws EmployeeNotFoundException;
 
 }

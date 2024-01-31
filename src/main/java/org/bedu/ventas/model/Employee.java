@@ -38,18 +38,4 @@ public class Employee /* implements Serializable */ {
 
     @OneToMany(mappedBy = "employee")
     private List<Order> orders = new ArrayList<>();
-
-    /*
-    @CreationTimestamp(source = SourceType.DB)
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @UpdateTimestamp(source = SourceType.DB)
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
-    @OneToOne
-    @JoinColumn(name = "medical_record_id", referencedColumnName = "id")
-    private MedicalRecord medicalRecord;
-    */
 }

@@ -21,8 +21,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("saludo")
     @ResponseStatus(HttpStatus.OK)
@@ -43,7 +47,7 @@ public class EmployeeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Empleado no encontrado") })
     @GetMapping("/{id}")
     public EmployeeDTO getEmployee(@PathVariable Long id) throws EmployeeNotFoundException {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
+        EmployeeDTO employeeDTO; 
         employeeDTO = employeeService.getEmployee(id);
         return employeeDTO;
     }
@@ -80,8 +84,7 @@ public class EmployeeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Empleado actualizado") })
     @PatchMapping("/{employeeid}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateParcial(@PathVariable long employeeid, @Valid @RequestBody EmployeeDTO data)
-            throws EmployeeNotFoundException {
+    public void updateParcial(@PathVariable long employeeid, @Valid @RequestBody EmployeeDTO data)  {
         employeeService.updateParcial(employeeid, data);
     }
 
@@ -89,7 +92,7 @@ public class EmployeeController {
     // @Operation(summary = "Obtiene las Ordenes de un Empleado determinado") Get
     @GetMapping("/{employeeId}/orders")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) {
+    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) throws EmployeeNotFoundException {
         return employeeService.findByIdWithOrders(employeeId);
     }
 }
