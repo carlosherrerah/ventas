@@ -1,0 +1,44 @@
+gradlew clean build
+gradle bootRun
+
+postman basico
+http://localhost:8080/employees/saludo
+http://localhost:8080/employees
+http://localhost:8080/employees/1
+http://localhost:8080/employees/5/orders
+
+http://localhost:8080/swagger-ui/index.html
+
+
+C:\Dev\ventas>gradlew clean build jacocoTestReport
+build/reports/jacoco/test/html/index.html
+
+*****
+Java 17
+C:\Apps\sonarqube-10.3.0.82913\bin\windows-x86-64>startSonar
+http://localhost:9000/
+admin Y*3
+Create a local project
+Use the global setting
+Analysis Method: Locally or With GitHub Actions
+Analize "Ventas": sqp_f04f3af94eea6da1b32f0be3be34ac4afe42fba2
+Run analysis on your project: gradle
+plugins {
+  id "org.sonarqube" version "4.4.1.3373"
+}
+
+Debe estar activo startSonar,  
+Validar el sistema de Ventas
+C:\Dev\ventas>
+gradlew sonar   -Dsonar.projectKey=Ventas   -Dsonar.projectName='Ventas'   -Dsonar.host.url=http://localhost:9000   -Dsonar.token=sqp_f04f3af94eea6da1b32f0be3be34ac4afe42fba2
+
+*****
+codeCoveragePlugin = jacoco
+jacoco.reportPath
+
+Variable de Entorno
+Path: SONAR_SCANNER = C:\Apps\sonar-scanner-5.0.1.3006-windows
+C:\Dev\ventas>
+sonar-scanner.bat -Dsonar.projectKey=Ventas -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_23daba824a5a7ffbaefa08260690ffed47f76936
+
+

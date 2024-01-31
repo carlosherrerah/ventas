@@ -26,11 +26,11 @@ public class Employee /* implements Serializable */ {
     @NotBlank(message = "No puede estar vacio")
     private String lastname;
 
-    @Column(length = 100, nullable = false)
+    //@Column(length = 100, nullable = false)  $$
     private String firstname;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false, name = "birthdate")  // Nombre de la columna
+    //@Column(nullable = false, name = "birthdate")  $$ // Nombre de la columna
     private Date birthdate;
 
     @Temporal(TemporalType.DATE)
