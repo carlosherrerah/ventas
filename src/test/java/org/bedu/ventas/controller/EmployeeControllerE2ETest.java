@@ -20,8 +20,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -44,8 +44,8 @@ class EmployeeControllerE2ETest {
     public void setup(){}
 
     @Test
-    @DisplayName("GET /movies should return a list of movies")
-    void findAllTest() throws Exception {
+    @DisplayName("GET /employees should return a list of employees")
+    void findAllTest() throws Exception  {
         Employee employee1 = new Employee();
 
         employee1.setLastname("YoVoy");
@@ -71,5 +71,24 @@ class EmployeeControllerE2ETest {
         assertEquals(employee1.getFirstname(), response.get(response.size()-1).getFirstname());
         assertEquals(employee1.getLastname(), response.get(response.size()-1).getLastname());
     }
+
+    /*
+    @Test
+    @DisplayName("POST /employees should return an error if lastname is missing")
+    void lastnameMissingInRequestBodyTest() throws Exception {
+        MvcResult result = mockMvc.perform(post("/employees").contentType("application/json").content("{\"firstname\":\"Lucas\"}"))  
+          .andExpect(status().isBadRequest())
+          .andReturn();
+  
+      String content = result.getResponse().getContentAsString();
+  
+      // { "code": "ERR_VALID", "message": "Hubo un error al validar los datos de
+      // entrada", "details": ["El lastname es obligatorio"]}
+  
+      String expectedResponse = "{\"code\":\"ERR_VALID\",\"message\":\"Hubo un error al validar los datos de entrada\",\"details\":[\"El lastname es obligatorio\"]}";
+  
+      assertEquals(expectedResponse, content);
+    }
+  */
 
 }

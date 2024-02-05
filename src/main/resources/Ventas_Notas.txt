@@ -1,3 +1,13 @@
+java -version
+Java 17
+
+C:\Apps\sonarqube-10.3.0.82913\bin\windows-x86-64>startSonar
+http://localhost:9000/
+
+C:\Dev\ventas>suena
+
+*****
+
 gradlew clean build
 gradle bootRun
 
@@ -8,15 +18,14 @@ http://localhost:8080/employees/1
 http://localhost:8080/employees/5/orders
 
 http://localhost:8080/swagger-ui/index.html
-
+http://localhost:8080/swagger-ui/index.html#
 
 C:\Dev\ventas>gradlew clean build jacocoTestReport
 build/reports/jacoco/test/html/index.html
 
-*****
-Java 17
 C:\Apps\sonarqube-10.3.0.82913\bin\windows-x86-64>startSonar
 http://localhost:9000/
+
 admin Y*3
 Create a local project
 Use the global setting

@@ -19,7 +19,7 @@ import lombok.Setter;
 @Table(name = "Employees")
 public class Employee /* implements Serializable */ {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    // AUTO
     @Column(name = "employeeid")
     private long employeeid;
 

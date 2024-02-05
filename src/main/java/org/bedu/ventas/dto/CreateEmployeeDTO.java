@@ -7,7 +7,7 @@ import lombok.Data;
 @Schema(description = "Modelo CreateEmployeeDTO para crear un empleado")
 @Data
 public class CreateEmployeeDTO {
-    
+
     private String lastname;   // En la DB obligatorio
 
     @Schema(description = "Nombre del Empleado", example = "Gonzalez")
