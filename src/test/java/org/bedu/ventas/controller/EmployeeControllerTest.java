@@ -1,17 +1,23 @@
 package org.bedu.ventas.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,11 +26,21 @@ import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
+import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.service.EmployeeService;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -36,12 +52,63 @@ class EmployeeControllerTest {
     @Autowired
     private EmployeeController controller;
 
+    // @Autowired
+    // private TestRestTemplate restTemplate;
+
+    @BeforeEach
+    public void setup() {
+        controller.deleteEmployee(100L);
+    }
+
     @Test
     @DisplayName("Controller should be injected")
     void smokeTest() {
         assertNotNull(controller);
     }
 
+    // ->
+    @Test
+    @DisplayName("GET /employee should return an employee")
+    void getEmployeeTest() throws EmployeeNotFoundException {
+        // given(service.getEmployee(anyLong())).willReturn(Optional.of(org.bedu.ventas.dto.EmployeeDTO.builder().employeeid(100L).lastname("Lopez").firstname("Chabelo").build()));
+        // mockMvc.perform(get("/cliente/{clienteId}", 1)
+        // .content(MediaType.APPLICATION_JSON_VALUE))
+
+        // ResponseEntity<Employee> response = restTemplate.getForEntity("/employees/1",
+        // Employee.class);
+        // assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+        // assertThat(response.getBody().getEmployeeid(), equalTo(1L));
+        EmployeeDTO fakeEmployee = new EmployeeDTO();
+
+        fakeEmployee.setEmployeeid(100);
+        fakeEmployee.setLastname("Pepito");
+
+        Mockito.when(service.getEmployee(100L)).thenReturn(fakeEmployee);
+        EmployeeDTO result = controller.getEmployee(100L);
+
+        assertNotNull(result);
+        assertEquals(fakeEmployee.getEmployeeid(), result.getEmployeeid());
+        assertEquals(fakeEmployee.getLastname(), result.getLastname());
+
+        Mockito.verify(service, Mockito.times(1)).getEmployee(100L);
+
+    }
+
+    @Test
+    @DisplayName("GET /employee should not return an employee")
+    void getEmployeeNotFoundTest() throws EmployeeNotFoundException {
+        Long employeeid = 100L;
+
+        Mockito.when(service.getEmployee(employeeid))
+                .thenThrow(new EmployeeNotFoundException(employeeid));
+
+        assertThrows(EmployeeNotFoundException.class, () -> controller.getEmployee(employeeid));
+
+        Mockito.verify(service, Mockito.times(1)).getEmployee(employeeid);
+
+    }
+
+    // <-
     @Test
     @DisplayName("GET /movies should return a list of movies")
     void findAllTest() {
@@ -50,7 +117,7 @@ class EmployeeControllerTest {
 
         EmployeeDTO fakeEmployee = new EmployeeDTO();
 
-        fakeEmployee.setEmployeeid(41);
+        fakeEmployee.setEmployeeid(100);
         fakeEmployee.setLastname("Pepito");
         fakeData.add(fakeEmployee);
 
@@ -87,12 +154,12 @@ class EmployeeControllerTest {
     void saveTest() {
         CreateEmployeeDTO dto = new CreateEmployeeDTO();
 
-        dto.setLastname("Herrera");
-        dto.setFirstname("Carlos");
+        dto.setLastname("Sinatra2");
+        dto.setFirstname("Frank");
 
         EmployeeDTO employee = new EmployeeDTO();
 
-        employee.setEmployeeid(45);
+        employee.setEmployeeid(100);
         employee.setLastname(dto.getLastname());
         employee.setFirstname(dto.getFirstname());
         when(service.save(any(CreateEmployeeDTO.class))).thenReturn(employee);
@@ -103,6 +170,7 @@ class EmployeeControllerTest {
         assertEquals(employee.getEmployeeid(), result.getEmployeeid());
         assertEquals(employee.getLastname(), result.getLastname());
         assertEquals(employee.getFirstname(), result.getFirstname());
+        assertEquals(employee, result);
     }
 
     @Test
@@ -110,22 +178,22 @@ class EmployeeControllerTest {
     void updateTest() throws EmployeeNotFoundException {
         UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
 
-        dto.setLastname("Herrera");
-        dto.setFirstname("Carlos");
+        dto.setLastname("Sinatra3");
+        dto.setFirstname("Frank");
 
-        controller.update(44, dto);
+        controller.update(100, dto);
 
         // Verificando que el método update del servicio
         // haya sido ejecutado 1 vez
-        verify(service, times(1)).update(44, dto);
+        verify(service, times(1)).update(100, dto);
     }
 
     @Test
     @DisplayName("Controller should delete a movie")
     void deleteByIdTest() {
-        controller.deleteEmployee(44L);
+        controller.deleteEmployee(101L);
 
-        verify(service, times(1)).delete(44);
+        verify(service, times(1)).delete(101);
 
     }
 

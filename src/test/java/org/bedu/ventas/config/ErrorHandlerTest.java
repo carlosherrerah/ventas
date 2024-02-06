@@ -16,7 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-public class ErrorHandlerTest {
+class ErrorHandlerTest {
 
     @InjectMocks
     private ErrorHandler errorHandler;

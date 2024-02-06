@@ -1,6 +1,7 @@
 package org.bedu.ventas.repository;
 
 import org.bedu.ventas.model.Employee;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,11 @@ class EmployeeRepositoryTest {
     @Autowired
     private TestEntityManager manager;
 
+    @BeforeEach
+    public void setup() {
+        // repository.deleteAll();
+    }
+
     @Test
     @DisplayName("Repository should be injected")
     void smokeTest() {
@@ -40,19 +46,32 @@ class EmployeeRepositoryTest {
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
 
-        employee1.setLastname("Miguel");
-        employee1.setFirstname("Luis");
+        employee1.setLastname("Lopez");
+        employee1.setFirstname("Jennifer");
 
-        employee2.setLastname("Fernandez");
-        employee2.setFirstname("Alejandro");
-
+        employee2.setLastname("Sinatra");
+        employee2.setFirstname("Frank");
 
         manager.persist(employee1);
         manager.persist(employee2);
 
-        List<Employee> result = repository.findByLastnameContaining("Fernandez");
+        List<Employee> result = repository.findByLastnameContaining("Sinatra");
 
         assertEquals(1, result.size());
+        assertEquals(employee2, result.get(0));
+    }
+
+    @Test
+    @DisplayName("Repository should save an interviewer")
+    public void saveTest() {
+        Employee employee = new Employee();
+
+        employee.setLastname("Musk");
+        employee.setFirstname("Elon");
+
+        Employee result = repository.save(employee);
+
+        assertNotNull(result);
     }
 
 }

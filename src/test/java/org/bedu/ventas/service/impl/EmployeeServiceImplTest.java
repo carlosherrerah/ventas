@@ -52,8 +52,8 @@ class EmployeeServiceImplTest {
 
         Employee employee = new Employee();
 
-        employee.setEmployeeid(44);
-        employee.setLastname("Sinatra");
+        employee.setEmployeeid(100);
+        employee.setLastname("Sinatra5");
         employee.setFirstname("Frank");
 
         data.add(employee);
@@ -74,7 +74,7 @@ class EmployeeServiceImplTest {
     void saveTest() {
       CreateEmployeeDTO dto = new CreateEmployeeDTO();
   
-      dto.setLastname("Sinatra");
+      dto.setLastname("Sinatra6");
       dto.setFirstname("Frank");
   
       Employee model = new Employee();
@@ -106,13 +106,13 @@ class EmployeeServiceImplTest {
     void updateTest() throws EmployeeNotFoundException {
       UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
   
-      dto.setLastname("Sinatra");
+      dto.setLastname("Sinatra7");
       dto.setFirstname("Frank");
  
       Employee employee = new Employee();
   
       employee.setEmployeeid(100);
-      employee.setLastname("Sinatra");
+      employee.setLastname("Sinatra8");
       employee.setFirstname("Stein");
   
       when(repository.findById(anyLong())).thenReturn(Optional.of(employee));

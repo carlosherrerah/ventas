@@ -36,7 +36,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDTO> findAll() {
         List<Employee> data = employeeRepository.findAll();
         return employeeMapper.toDTO(data);
-
     }
 
     @Override

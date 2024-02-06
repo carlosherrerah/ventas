@@ -1,6 +1,8 @@
 java -version
 Java 17
 
+Encender Apache y MySQL
+
 C:\Apps\sonarqube-10.3.0.82913\bin\windows-x86-64>startSonar
 http://localhost:9000/
 
