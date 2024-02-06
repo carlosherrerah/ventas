@@ -13,7 +13,6 @@ import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.model.Order;
 import org.bedu.ventas.repository.EmployeeRepository;
 import org.bedu.ventas.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +22,6 @@ public class OrderService {
     private EmployeeRepository employeeRepository;
     private OrderMapper orderMapper;
     
-    @Autowired
     public OrderService(OrderRepository orderRepository, EmployeeRepository employeeRepository,
             OrderMapper orderMapper) {
         this.orderRepository = orderRepository;

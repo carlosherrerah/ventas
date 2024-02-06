@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -47,11 +46,11 @@ class EmployeeControllerE2ETest {
     @Test
     @DisplayName("GET /employees should return a list of employees")
     void findAllTest() throws Exception  {
-/*        
+        
         Employee employee1 = new Employee();
 
-        employee1.setLastname("Sinatra1");
-        employee1.setFirstname("Frank");
+        employee1.setLastname("Jose");
+        employee1.setFirstname("Jose");
 
         repository.save(employee1);
 
@@ -72,7 +71,7 @@ class EmployeeControllerE2ETest {
         //assertEquals(employee1.getLastname(),  response.get(0).getLastname());
         assertEquals(employee1.getFirstname(), response.get(response.size()-1).getFirstname());
         assertEquals(employee1.getLastname(), response.get(response.size()-1).getLastname());
-*/        
+       
    }
 
     /*

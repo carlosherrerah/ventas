@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class OrderController {
     private OrderService orderService;
         
-    @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }

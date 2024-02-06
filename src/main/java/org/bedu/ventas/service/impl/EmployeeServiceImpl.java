@@ -13,7 +13,6 @@ import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
 import org.bedu.ventas.service.EmployeeService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeMapper employeeMapper;
     private ModelMapper modelMapper;
 
-    @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper,
             ModelMapper modelMapper) {
         this.employeeRepository = employeeRepository;
@@ -75,19 +73,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee model = employeeMapper.toModel(data);
         Employee result = employeeRepository.save(model);
         return employeeMapper.toDTO(result);
-    }
-
-    @Override
-    @Transactional
-    public void updateParcial(long employeeid, EmployeeDTO data) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(employeeid);
-        EmployeeDTO employeeDTO = modelMapper.map(optionalEmployee, EmployeeDTO.class); // && vacio
-      
-        employeeDTO.setLastname(data.getLastname());
-        employeeDTO = data;
-        Employee employee = modelMapper.map(employeeDTO ,Employee.class);
-       
-        employeeRepository.save(employee);
     }
 
     @Override

@@ -9,7 +9,6 @@ import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
 import org.bedu.ventas.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +22,8 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-    }
-
-    @GetMapping("saludo")
-    @ResponseStatus(HttpStatus.OK)
-    public String saludar() {
-        return "Hello world";
     }
 
     @Operation(summary = "Obtiene la lista de todos los empleados", description = "No requiere parámetros", responses = {
@@ -78,14 +70,6 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.CREATED)
     public EmployeeDTO save(@Valid @RequestBody CreateEmployeeDTO data) {
         return employeeService.save(data);
-    }
-
-    @Operation(summary = "Actualizacion Parcial del empleado", description = "Agrega el id del empleado a la URL", responses = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Empleado actualizado") })
-    @PatchMapping("/{employeeid}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateParcial(@PathVariable long employeeid, @Valid @RequestBody EmployeeDTO data)  {
-        employeeService.updateParcial(employeeid, data);
     }
 
     // @Operation(summary = "Asocia una Orden a un Empleado") Post

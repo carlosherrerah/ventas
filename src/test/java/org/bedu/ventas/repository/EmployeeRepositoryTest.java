@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -63,7 +62,7 @@ class EmployeeRepositoryTest {
 
     @Test
     @DisplayName("Repository should save an interviewer")
-    public void saveTest() {
+    void saveTest() {
         Employee employee = new Employee();
 
         employee.setLastname("Musk");

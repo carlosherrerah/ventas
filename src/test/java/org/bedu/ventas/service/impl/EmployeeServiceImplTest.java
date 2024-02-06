@@ -20,8 +20,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
+import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
 import org.bedu.ventas.service.EmployeeService;
@@ -39,6 +41,9 @@ class EmployeeServiceImplTest {
 
     @Autowired
     private EmployeeService service;
+
+    @Autowired
+    private EmployeeMapper mapper;
 
     @Test
     @DisplayName("Service should be injected")
@@ -72,25 +77,25 @@ class EmployeeServiceImplTest {
     @Test
     @DisplayName("Service should save a movie in repository")
     void saveTest() {
-      CreateEmployeeDTO dto = new CreateEmployeeDTO();
-  
-      dto.setLastname("Sinatra6");
-      dto.setFirstname("Frank");
-  
-      Employee model = new Employee();
-  
-      model.setEmployeeid(100);
-      model.setLastname(dto.getLastname());
-      model.setFirstname((dto.getFirstname()));
-  
-      when(repository.save(any(Employee.class))).thenReturn(model);
-  
-      EmployeeDTO result = service.save(dto);
-  
-      assertNotNull(result);
-      assertEquals(model.getEmployeeid(), result.getEmployeeid());
-      assertEquals(model.getLastname(), result.getLastname());
-      assertEquals(model.getFirstname(), result.getFirstname());
+        CreateEmployeeDTO dto = new CreateEmployeeDTO();
+
+        dto.setLastname("Sinatra6");
+        dto.setFirstname("Frank");
+
+        Employee model = new Employee();
+
+        model.setEmployeeid(100);
+        model.setLastname(dto.getLastname());
+        model.setFirstname((dto.getFirstname()));
+
+        when(repository.save(any(Employee.class))).thenReturn(model);
+
+        EmployeeDTO result = service.save(dto);
+
+        assertNotNull(result);
+        assertEquals(model.getEmployeeid(), result.getEmployeeid());
+        assertEquals(model.getLastname(), result.getLastname());
+        assertEquals(model.getFirstname(), result.getFirstname());
     }
 
     @Test
@@ -104,52 +109,108 @@ class EmployeeServiceImplTest {
     @Test
     @DisplayName("Service should update an employee in repository")
     void updateTest() throws EmployeeNotFoundException {
-      UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
-  
-      dto.setLastname("Sinatra7");
-      dto.setFirstname("Frank");
- 
-      Employee employee = new Employee();
-  
-      employee.setEmployeeid(100);
-      employee.setLastname("Sinatra8");
-      employee.setFirstname("Stein");
-  
-      when(repository.findById(anyLong())).thenReturn(Optional.of(employee));
-  
-      service.update(100, dto);
-  
-      assertEquals(dto.getLastname(), employee.getLastname());
-      assertEquals(dto.getFirstname(), employee.getFirstname());
-      verify(repository, times(1)).save(employee);
+        UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
+
+        dto.setLastname("Sinatra7");
+        dto.setFirstname("Frank");
+
+        Employee employee = new Employee();
+
+        employee.setEmployeeid(100);
+        employee.setLastname("Sinatra8");
+        employee.setFirstname("Stein");
+
+        when(repository.findById(anyLong())).thenReturn(Optional.of(employee));
+
+        service.update(100, dto);
+
+        assertEquals(dto.getLastname(), employee.getLastname());
+        assertEquals(dto.getFirstname(), employee.getFirstname());
+        verify(repository, times(1)).save(employee);
     }
 
     @Test
     @DisplayName("Service should throws an error if movie was not found")
     void updateWithErrorTest() {
-      UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
-      Optional<Employee> dummy = Optional.empty();
-  
-      when(repository.findById(anyLong())).thenReturn(dummy);
-  
-      assertThrows(EmployeeNotFoundException.class, () -> service.update(100, dto));
-    }
-  
+        UpdateEmployeeDTO dto = new UpdateEmployeeDTO();
+        Optional<Employee> dummy = Optional.empty();
 
-/*
-    @Test
-    void testFindByIdWithOrders() {
+        when(repository.findById(anyLong())).thenReturn(dummy);
 
+        assertThrows(EmployeeNotFoundException.class, () -> service.update(100, dto));
     }
 
     @Test
-    void testGetEmployee() {
+    @DisplayName("Service should return an employee")
+    void testGetEmployee() throws EmployeeNotFoundException {
+        // Arrange
+        long employeeId = 100L;
+        Employee employee = new Employee(); // Create a sample Employee object
+        EmployeeDTO employeeDTO = new EmployeeDTO(); // Create a sample EmployeeDTO object
+
+        when(repository.findById(employeeId)).thenReturn(Optional.of(employee));
+        employeeDTO = mapper.toDTO(employee);
+        // when(mapper.toDTO(employee)).thenReturn(employeeDTO); // Corregido
+
+        // Act
+        EmployeeDTO result = service.getEmployee(employeeId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(employeeDTO, result);
 
     }
 
     @Test
-    void testUpdateParcial() {
+    @DisplayName("Service should not return an employee")
+    void testGetEmployeeNotFound() throws EmployeeNotFoundException {
+        long employeeId = 100L;
+
+        when(repository.findById(employeeId)).thenReturn(Optional.empty());
+
+        assertThrows(EmployeeNotFoundException.class, () -> service.getEmployee(employeeId));
+    }
+
+    @Test
+    @DisplayName("Service should return an employee with orders")
+    void testFindByIdWithOrders() throws EmployeeNotFoundException {
+        // Arrange
+        long employeeId = 100L;
+        Employee employee = new Employee();
+        EmployeeWithOrdersDTO employeeWithOrdersDTO = new EmployeeWithOrdersDTO();
+
+        when(repository.findById(employeeId)).thenReturn(Optional.of(employee));
+        // when(mapper.toDTOWithOrders(employee)).thenReturn(employeeWithOrdersDTO);
+        employeeWithOrdersDTO = mapper.toDTOWithOrders(employee);
+
+        // Act
+        EmployeeWithOrdersDTO result = service.findByIdWithOrders(employeeId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(employeeWithOrdersDTO, result);
 
     }
-*/    
+
+    @Test
+    @DisplayName("Service should not return an employee with orders")
+    void testFindByIdWithOrdersNotFound() throws EmployeeNotFoundException {
+        long employeeId = 100L;
+
+        when(repository.findById(employeeId)).thenReturn(Optional.empty());
+
+        assertThrows(EmployeeNotFoundException.class, () -> service.findByIdWithOrders(employeeId));
+
+    }
+
+    /*
+     * 
+     * 
+     * 
+     * 
+     * @Test
+     * void testUpdateParcial() {
+     * 
+     * }
+     */
 }

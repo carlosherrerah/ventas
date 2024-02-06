@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.bedu.ventas.dto.ErrorDTO;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class ErrorHandlerTest {
     private MethodArgumentNotValidException validException;
 
     @Mock
-    private RuntimeException runtimeException;
+    private org.bedu.ventas.exception.RuntimeException runtimeException;
 
     @Mock
     private Exception genericException;
@@ -48,7 +47,7 @@ class ErrorHandlerTest {
 
     @Test
     void testRuntimeError() {  // $$ pendiente de corregir
-/*        
+        
         // Arrange
         MockitoAnnotations.openMocks(this);
         when(runtimeException.getCode()).thenReturn("RUNTIME_ERROR_CODE");
@@ -62,7 +61,7 @@ class ErrorHandlerTest {
         assertEquals("RUNTIME_ERROR_CODE", errorDTO.getCode());
         assertEquals("Runtime error message", errorDTO.getMessage());
         assertEquals(Collections.singletonList("Error details"), errorDTO.getDetails());
-*/
+
     }
 
     @Test

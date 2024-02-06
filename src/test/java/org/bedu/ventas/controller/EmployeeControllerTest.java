@@ -9,8 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,23 +22,14 @@ import static org.mockito.Mockito.when;
 
 import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
-import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.service.EmployeeService;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -56,7 +45,7 @@ class EmployeeControllerTest {
     // private TestRestTemplate restTemplate;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         controller.deleteEmployee(100L);
     }
 
@@ -195,6 +184,36 @@ class EmployeeControllerTest {
 
         verify(service, times(1)).delete(101);
 
+    }
+
+    @Test
+    @DisplayName("GET /employee/Order should return an employee with Orders")
+    void findAllEmployeeOrderTest() throws EmployeeNotFoundException {
+
+        EmployeeWithOrdersDTO fakeEmployeeWithOrdersDTO = new EmployeeWithOrdersDTO();
+
+        fakeEmployeeWithOrdersDTO.setEmployeeid(100L);
+        fakeEmployeeWithOrdersDTO.setLastname("Pepito");
+        fakeEmployeeWithOrdersDTO.setOrders(Collections.emptyList());
+        ;
+
+        Mockito.when(service.findByIdWithOrders(anyLong())).thenReturn(fakeEmployeeWithOrdersDTO);
+
+        EmployeeWithOrdersDTO result = controller.findAllEmployeeOrders(100L);
+
+        assertNotNull(result);
+        assertEquals(fakeEmployeeWithOrdersDTO.getEmployeeid(), result.getEmployeeid());
+        assertEquals(fakeEmployeeWithOrdersDTO.getLastname(), result.getLastname());
+        assertEquals(Collections.emptyList(), result.getOrders());
+
+    }
+
+    @Test
+    @DisplayName("GET /employee/Order should not return an employee with Orders")
+    void findAllEmployeeOrderNotFoundTest() throws EmployeeNotFoundException {
+        Long employeeid = 100L;
+        Mockito.when(service.findByIdWithOrders(anyLong())).thenThrow(new EmployeeNotFoundException(employeeid));
+        Mockito.verify(service, Mockito.times(0)).getEmployee(employeeid);
     }
 
 }
