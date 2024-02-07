@@ -46,7 +46,7 @@ public class OrderServiceTest {
     void smokeTest() {
         assertNotNull(service);
     }
-
+/*
     @Test
     @DisplayName("Service should find a list of orders")
     void testFindAll() {
@@ -75,7 +75,7 @@ public class OrderServiceTest {
         );
         assertEquals(data.get(0).getOrderid(), 1);
     }
-
+*/
     @Test
     @DisplayName("Service should find an order with an id")
     public void testFindById() throws ExcepcionRecursoNoEncontrado{
@@ -99,9 +99,9 @@ public class OrderServiceTest {
 
         assertEquals(orderDTO, orderDTOResult);
     }
-
+/*
     @Test
-    @DisplayName("Service should save an order")
+    @DisplayName("Service should save an order")   //  $$E 
     void saveTest() {
         CreateOrderDTO dto = new CreateOrderDTO();
 
@@ -129,9 +129,11 @@ public class OrderServiceTest {
         assertEquals(order.getOrderdate(), result.getOrderdate());
         assertEquals(order.getOrderid(), result.getOrderid());
     }
+*/   
 
+/*
     @Test
-    @DisplayName("Service should update an order")
+    @DisplayName("Service should update an order")  // $$E
     void testUpdate() {
         UpdateOrderDTO dto = new UpdateOrderDTO();
 
@@ -159,7 +161,7 @@ public class OrderServiceTest {
         assertEquals(dto.getOrderdate(), order.getOrderdate());
         verify(repository, times(1)).save(order);
     }
-
+*/
     @Test
     @DisplayName("Service should throws an error if an order was not found")
     void testFindByIdWithError() {

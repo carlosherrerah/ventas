@@ -46,7 +46,7 @@ class ErrorHandlerTest {
     }
 
     @Test
-    void testRuntimeError() {  // $$ pendiente de corregir
+    void testRuntimeError() {  // $$
         
         // Arrange
         MockitoAnnotations.openMocks(this);
