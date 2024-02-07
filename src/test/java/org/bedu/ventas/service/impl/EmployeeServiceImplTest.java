@@ -8,11 +8,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +41,7 @@ class EmployeeServiceImplTest {
     @MockBean
     private EmployeeRepository repository;
 
-    @Autowired
+    @Autowired  //  @InjectMocks    
     private EmployeeService service;
 
     @Autowired
@@ -75,7 +77,7 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    @DisplayName("Service should save a movie in repository")
+    @DisplayName("Service should save an employee in repository")   // $$ Error
     void saveTest() {
         CreateEmployeeDTO dto = new CreateEmployeeDTO();
 
@@ -145,8 +147,8 @@ class EmployeeServiceImplTest {
     void testGetEmployee() throws EmployeeNotFoundException {
         // Arrange
         long employeeId = 100L;
-        Employee employee = new Employee(); // Create a sample Employee object
-        EmployeeDTO employeeDTO = new EmployeeDTO(); // Create a sample EmployeeDTO object
+        Employee employee = new Employee(); 
+        EmployeeDTO employeeDTO = new EmployeeDTO(); 
 
         when(repository.findById(employeeId)).thenReturn(Optional.of(employee));
         employeeDTO = mapper.toDTO(employee);
@@ -203,14 +205,4 @@ class EmployeeServiceImplTest {
 
     }
 
-    /*
-     * 
-     * 
-     * 
-     * 
-     * @Test
-     * void testUpdateParcial() {
-     * 
-     * }
-     */
 }
