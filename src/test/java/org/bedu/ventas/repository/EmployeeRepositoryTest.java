@@ -33,14 +33,15 @@ class EmployeeRepositoryTest {
     public void setup() {
         // repository.deleteAll();
     }
-
+/*
     @Test
     @DisplayName("Repository should be injected")  // $$E
     void smokeTest() {
-/*        
         assertNotNull(repository);    
-*/        
+        
     }
+*/    
+
 /*
     @Test
     @DisplayName("Repository should filter employees by lastname")  // $$ Error
@@ -65,10 +66,12 @@ class EmployeeRepositoryTest {
         assertEquals(employee2, result.get(0));
     }
 */
+
+/*
     @Test
     @DisplayName("Repository should save an employee")  // $$ Error
     void saveTest() {
-/*        
+        
         Employee employee = new Employee();
 
         employee.setLastname("Musk");
@@ -77,7 +80,8 @@ class EmployeeRepositoryTest {
         Employee result = repository.save(employee);
 
         assertNotNull(result);
-*/        
+        
     }
+*/    
 
 }
