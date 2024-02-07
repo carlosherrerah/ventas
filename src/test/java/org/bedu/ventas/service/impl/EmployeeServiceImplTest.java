@@ -75,7 +75,7 @@ class EmployeeServiceImplTest {
         assertEquals(employee.getLastname(), result.get(0).getLastname());
 
     }
-/*
+
     @Test
     @DisplayName("Service should save an employee in repository")   // $$E
     void saveTest() {
@@ -99,7 +99,7 @@ class EmployeeServiceImplTest {
         assertEquals(model.getLastname(), result.getLastname());
         assertEquals(model.getFirstname(), result.getFirstname());
     }
-*/
+
     @Test
     @DisplayName("Service should delete an employee by id in repository")
     void testDelete() {

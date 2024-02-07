@@ -33,16 +33,14 @@ class EmployeeRepositoryTest {
     public void setup() {
         // repository.deleteAll();
     }
-/*
+
     @Test
     @DisplayName("Repository should be injected")  // $$E
     void smokeTest() {
         assertNotNull(repository);    
         
     }
-*/    
-
-/*
+    
     @Test
     @DisplayName("Repository should filter employees by lastname")  // $$ Error
 
@@ -54,20 +52,19 @@ class EmployeeRepositoryTest {
         employee1.setLastname("Lopez");
         employee1.setFirstname("Jennifer");
 
-        employee2.setLastname("Sinatra");
-        employee2.setFirstname("Frank");
+        employee2.setLastname("King");
+        employee2.setFirstname("Kong");
 
         manager.persist(employee1);
         manager.persist(employee2);
 
-        List<Employee> result = repository.findByLastnameContaining("Sinatra");
+        List<Employee> result = repository.findByLastnameContaining("King");
 
-        assertEquals(1, result.size());
-        assertEquals(employee2, result.get(0));
+        assertEquals(2, result.size());
+        assertEquals(employee2, result.get(1));
     }
-*/
 
-/*
+
     @Test
     @DisplayName("Repository should save an employee")  // $$ Error
     void saveTest() {
@@ -82,6 +79,6 @@ class EmployeeRepositoryTest {
         assertNotNull(result);
         
     }
-*/    
+    
 
 }
