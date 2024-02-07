@@ -19,18 +19,18 @@ import lombok.Setter;
 @Table(name = "Employees")
 public class Employee /* implements Serializable */ {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    // AUTO
     @Column(name = "employeeid")
     private long employeeid;
 
     @NotBlank(message = "No puede estar vacio")
     private String lastname;
 
-    @Column(length = 100, nullable = false)
+    //@Column(length = 100, nullable = false)  $$
     private String firstname;
 
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false, name = "birthdate")  // Nombre de la columna
+    //@Column(nullable = false, name = "birthdate")  $$ // Nombre de la columna
     private Date birthdate;
 
     @Temporal(TemporalType.DATE)
@@ -38,18 +38,4 @@ public class Employee /* implements Serializable */ {
 
     @OneToMany(mappedBy = "employee")
     private List<Order> orders = new ArrayList<>();
-
-    /*
-    @CreationTimestamp(source = SourceType.DB)
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @UpdateTimestamp(source = SourceType.DB)
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
-    @OneToOne
-    @JoinColumn(name = "medical_record_id", referencedColumnName = "id")
-    private MedicalRecord medicalRecord;
-    */
 }

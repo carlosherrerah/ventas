@@ -22,7 +22,6 @@ public interface OrderMapper {
         return sourceList
             .stream()
             .map(this::toDTO)
-            .peek(dto -> dto.setEmployee(null))
             .toList();
     }
 }

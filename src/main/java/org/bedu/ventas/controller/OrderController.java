@@ -5,6 +5,7 @@ import java.util.List;
 import org.bedu.ventas.dto.CreateOrderDTO;
 import org.bedu.ventas.dto.OrderDTO;
 import org.bedu.ventas.dto.UpdateOrderDTO;
+import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
 import org.bedu.ventas.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
     private OrderService orderService;
-    
+        
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     @Operation(summary = "Obtiene una lista de toda las ordenes de compra", description = "No requiere parámetros", responses = {
         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de ordenes de compra")
     })
@@ -45,7 +49,7 @@ public class OrderController {
     })
     @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
-    public OrderDTO findById(@PathVariable long orderId) {
+    public OrderDTO findById(@PathVariable long orderId)  throws ExcepcionRecursoNoEncontrado {
         return orderService.findById(orderId);
     }
 

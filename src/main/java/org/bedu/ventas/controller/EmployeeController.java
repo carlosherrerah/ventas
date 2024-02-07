@@ -5,10 +5,10 @@ import jakarta.validation.Valid;
 
 import org.bedu.ventas.dto.CreateEmployeeDTO;
 import org.bedu.ventas.dto.EmployeeDTO;
+import org.bedu.ventas.dto.EmployeeWithOrdersDTO;
 import org.bedu.ventas.dto.UpdateEmployeeDTO;
 import org.bedu.ventas.exception.EmployeeNotFoundException;
 import org.bedu.ventas.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +20,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("saludo")
-    @ResponseStatus(HttpStatus.OK)
-    public String saludar() {
-        return "Hello world";
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @Operation(summary = "Obtiene la lista de todos los empleados", description = "No requiere parámetros", responses = {
@@ -42,7 +39,7 @@ public class EmployeeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Empleado no encontrado") })
     @GetMapping("/{id}")
     public EmployeeDTO getEmployee(@PathVariable Long id) throws EmployeeNotFoundException {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
+        EmployeeDTO employeeDTO; 
         employeeDTO = employeeService.getEmployee(id);
         return employeeDTO;
     }
@@ -75,15 +72,11 @@ public class EmployeeController {
         return employeeService.save(data);
     }
 
-    @Operation(summary = "Actualizacion Parcial del empleado", description = "Agrega el id del empleado a la URL", responses = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Empleado actualizado") })
-    @PatchMapping("/{employeeid}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateParcial(@PathVariable long employeeid, @Valid @RequestBody EmployeeDTO data)
-            throws EmployeeNotFoundException {
-        employeeService.updateParcial(employeeid, data);
-    }
-
     // @Operation(summary = "Asocia una Orden a un Empleado") Post
     // @Operation(summary = "Obtiene las Ordenes de un Empleado determinado") Get
+    @GetMapping("/{employeeId}/orders")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeWithOrdersDTO findAllEmployeeOrders(@PathVariable long employeeId) throws EmployeeNotFoundException {
+        return employeeService.findByIdWithOrders(employeeId);
+    }
 }
