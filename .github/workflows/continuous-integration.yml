@@ -1,24 +1,21 @@
-name: Interviewer API CI/CD
-
+name: Ventas API CI/CD
 on:
-  push:
+    push:
 
 jobs:
-  continuous-integration:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Obtener los ultimos cambios del repositorio
-        uses: actions/checkout@v4
+    continuous-integration:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Obtener los últimos cambios del repositorio
+              uses: actions/checkout@v4
+            - name: Instalar Java 17
+              uses: actions/setup-java@v4
+              with:
+                  distribution: temurin
+                  java-version: 17
+            
+            - name: Configuración de Gradle
+              uses: gradle/gradle-build-action@v2
 
-      - name: Instalar Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Configuracion de Gradle
-        uses: gradle/gradle-build-action@v2
-
-      - name: Compilar el proyecto
-        run: gradle build
-         
+            - name: Compilar el proyecto
+              run: gradle build

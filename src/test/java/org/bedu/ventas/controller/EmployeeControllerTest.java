@@ -99,7 +99,7 @@ class EmployeeControllerTest {
 
     // <-
     @Test
-    @DisplayName("GET /movies should return a list of movies")
+    @DisplayName("GET /movies should return a list of employees")
     void findAllTest() {
         // Arrange
         List<EmployeeDTO> fakeData = new LinkedList<>();
