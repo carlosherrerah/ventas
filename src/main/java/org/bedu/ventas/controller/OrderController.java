@@ -7,7 +7,6 @@ import org.bedu.ventas.dto.OrderDTO;
 import org.bedu.ventas.dto.UpdateOrderDTO;
 import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
 import org.bedu.ventas.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
