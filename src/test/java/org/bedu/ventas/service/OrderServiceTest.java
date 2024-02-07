@@ -161,7 +161,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("Service should throws an error if movie was not found")
+    @DisplayName("Service should throws an error if an order was not found")
     void testFindByIdWithError() {
         when(repository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(ExcepcionRecursoNoEncontrado.class, () -> service.findById(1000));
