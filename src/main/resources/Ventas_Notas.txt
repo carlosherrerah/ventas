@@ -52,4 +52,5 @@ Path: SONAR_SCANNER = C:\Apps\sonar-scanner-5.0.1.3006-windows
 C:\Dev\ventas>
 sonar-scanner.bat -Dsonar.projectKey=Ventas -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_23daba824a5a7ffbaefa08260690ffed47f76936
 
-
+http://www.selenium.dev
+http://localhost:5555/

@@ -30,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
+  
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class OrderServiceTest {
@@ -67,11 +67,11 @@ public class OrderServiceTest {
         assertTrue(result.size() > 0);
         assertInstanceOf(
             OrderDTO.class, 
-            result.get(random.nextInt(10 - 1 + 1) + 1)
+            result.get(random.nextInt(9 - 1 + 1) + 1)
         );
         assertInstanceOf(
             EmployeeDTO.class, 
-            result.get(random.nextInt(10 - 1 + 1) + 1).getEmployee()
+            result.get(random.nextInt(9 - 1 + 1) + 1).getEmployee()
         );
         assertEquals(data.get(0).getOrderid(), 1);
     }
@@ -131,7 +131,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    @DisplayName("Service should update an order")
+    @DisplayName("Service should update an order")  // $$E
     void testUpdate() {
         UpdateOrderDTO dto = new UpdateOrderDTO();
 
