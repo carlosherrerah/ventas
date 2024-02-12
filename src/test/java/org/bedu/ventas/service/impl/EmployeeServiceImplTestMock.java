@@ -39,51 +39,58 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)    // $$ Aun no funciona
+@SpringBootTest
 class EmployeeServiceImplTestMock {
 
-    @Mock //Mock
+    @MockBean
     private EmployeeRepository repository;
 
-    @InjectMocks  // InjectMocks
-    private EmployeeServiceImpl service;
-
-/*    
-    @Mock
+    @MockBean
     private EmployeeMapper employeeMapper;
-*/
+
+    @InjectMocks
+    private EmployeeServiceImpl service;
 
     @Test
     @DisplayName("Service should be injected")
     void smokeTest() {
         assertNotNull(service);
     }
-
-/*    
+/*   
     @Test
     @DisplayName("Service should save an employee in repository")
     void saveTest() {
          LocalDate birthdate1 = LocalDate.of(1996, 6, 15);
          Date birthdate2 = new Date(96, 5, 15);
 
+         Employee employee = new Employee();
+         employee.setEmployeeid(100L);
+         employee.setLastname("Sinatra");
+         employee.setFirstname("Frank");
+
+         EmployeeDTO employeeDto = new EmployeeDTO();
+         employeeDto.setEmployeeid(employee.getEmployeeid());
+         employeeDto.setLastname(employee.getLastname());
+         employeeDto.setFirstname(employee.getFirstname());
+
          CreateEmployeeDTO dto = new CreateEmployeeDTO();
-         dto.setLastname("Sinatra6");
-         dto.setFirstname("Frank");
+         dto.setLastname(employee.getLastname());
+         dto.setFirstname(employee.getFirstname());
          dto.setBirthdate(birthdate2);
          dto.setHiredate(birthdate2);
-         
-         Employee model = new Employee();
-         model.setEmployeeid(100L);
-         model.setLastname(dto.getLastname());
-         model.setFirstname(dto.getFirstname());
-         
+
          // Configura el comportamiento del mock repository
-         when(repository.save(any(Employee.class))).thenReturn(model);
+         // .when(repository.save(any(Employee.class))).thenReturn(model);
          //when(repository.save(any(Employee.class))).thenReturn(new Employee());
          
          // Configura el comportamiento del mock mapper
-         // when(employeeMapper.toModel(dto)).thenReturn(model);
+         // when(employeeMapper.toModel(dto)).thenReturn(employee);
          // when(employeeMapper.toModel(any(CreateEmployeeDTO.class))).thenReturn(new Employee());
          
+         //when(repository.findById(anyLong())).thenReturn(Optional.of(employee));
+         when(employeeMapper.toDTO(any(Employee.class))).thenReturn(employeeDto);
+         when(repository.save(any(Employee.class))).thenReturn(employee);
+
          // Llama al método save en service
          EmployeeDTO result = service.save(dto);   // error
          
@@ -94,6 +101,8 @@ class EmployeeServiceImplTestMock {
          
          verify(repository, times(1)).save(any(Employee.class));
     }
-*/   
+*/
+ 
 }
+
 
