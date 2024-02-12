@@ -22,10 +22,12 @@ import org.bedu.ventas.exception.ExcepcionRecursoNoEncontrado;
 import org.bedu.ventas.mapper.OrderMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.model.Order;
+import org.bedu.ventas.repository.EmployeeRepository;
 import org.bedu.ventas.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,7 +40,13 @@ public class OrderServiceTest {
     @MockBean
     private OrderRepository repository;
 
-    @Autowired
+    @MockBean
+    private EmployeeRepository empRepository;
+
+    @MockBean
+    private OrderMapper mapper;
+
+    @InjectMocks
     private OrderService service;
 
     @Test
@@ -60,7 +68,14 @@ public class OrderServiceTest {
             testOrder.setEmployee(new Employee());
             data.add(testOrder);
         }
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderid(100);
+        orderDTO.setOrderdate(new Date());
+        orderDTO.setEmployee(new EmployeeDTO());
+        
         when(repository.findAll()).thenReturn(data);
+        when(mapper.toDTO(any())).thenReturn(orderDTO);
 
         List<OrderDTO> result = service.findAll();
         assertNotNull(result);
@@ -104,23 +119,37 @@ public class OrderServiceTest {
     @DisplayName("Service should save an order")
     void saveTest() {
         CreateOrderDTO dto = new CreateOrderDTO();
-
         dto.setEmployeeid(1);
 
-        Order order = new Order();
-
-        order.setOrderid(100);
-        order.setOrderdate(new Date());
-        order.setEmployee(new Employee(
+        Employee employee = new Employee(
             1,
             "lastnameTest",
             "firstnameTest",
             new Date(),
             new Date(),
             null
-        ));
+        );
+        Order order = new Order();
+        order.setOrderid(100);
+        order.setOrderdate(new Date());
+        order.setEmployee(employee);
 
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderid(100);
+        orderDTO.setOrderdate(order.getOrderdate());
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setEmployeeid(1);
+        employeeDTO.setLastname("lastnameTest");
+        employeeDTO.setFirstname("firstnameTest");
+        employeeDTO.setHiredate(employee.getHiredate());
+        employeeDTO.setBirthdate(employee.getBirthdate());
+        orderDTO.setEmployee(employeeDTO);
+
+
+        when(empRepository.findById(anyLong())).thenReturn(Optional.of(employee));
+        when(mapper.toDTO(any(Order.class))).thenReturn(orderDTO);
         when(repository.save(any(Order.class))).thenReturn(order);
+
 
         OrderDTO result = service.save(dto);
 
@@ -140,17 +169,20 @@ public class OrderServiceTest {
 
         Order order = new Order();
 
-        order.setOrderid(1);
-        order.setOrderdate(new Date());
-        order.setEmployee(new Employee(
+
+        Employee employee = new Employee(
             1,
             "lastnameTest",
             "firstnameTest",
             new Date(),
             new Date(),
             null
-        ));
+        );
+        order.setOrderid(1);
+        order.setOrderdate(new Date());
+        order.setEmployee(employee);
 
+        when(empRepository.findById(anyLong())).thenReturn(Optional.of(employee));
         when(repository.findById(anyLong())).thenReturn(Optional.of(order));
 
         service.update(1, dto);
