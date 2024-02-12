@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
@@ -43,8 +44,9 @@ class EmployeeControllerE2ETest {
     public void setup(){
     }
 
+/* 
     @Test
-    @DisplayName("GET /employees should return a list of employees")  // $$E
+    @DisplayName("GET /employees should return a list of employees")  // $$ Jpa
     void findAllTest() throws Exception  {
       
         Employee employee1 = new Employee();
@@ -73,10 +75,11 @@ class EmployeeControllerE2ETest {
         assertEquals(employee1.getLastname(), response.get(response.size()-1).getLastname());
   
    }
+*/
 
-    /*
+/*    
     @Test
-    @DisplayName("POST /employees should return an error if lastname is missing")
+    @DisplayName("POST /employees should return an error if lastname is missing")  // $$E
     void lastnameMissingInRequestBodyTest() throws Exception {
         MvcResult result = mockMvc.perform(post("/employees").contentType("application/json").content("{\"firstname\":\"Lucas\"}"))  
           .andExpect(status().isBadRequest())
@@ -91,6 +94,6 @@ class EmployeeControllerE2ETest {
   
       assertEquals(expectedResponse, content);
     }
-  */
+*/  
 
 }

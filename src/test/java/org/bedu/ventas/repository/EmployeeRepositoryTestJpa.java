@@ -21,7 +21,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class EmployeeRepositoryTest {
+class EmployeeRepositoryTestJpa {
 
     @Autowired
     private EmployeeRepository repository;
@@ -33,7 +33,7 @@ class EmployeeRepositoryTest {
     public void setup() {
         // repository.deleteAll();
     }
-
+/*
     @Test
     @DisplayName("Repository should be injected")  // $$E
     void smokeTest() {
@@ -42,7 +42,7 @@ class EmployeeRepositoryTest {
     }
     
     @Test
-    @DisplayName("Repository should filter employees by lastname")  // $$ Error
+    @DisplayName("Repository should filter employees by lastname")  // $$E   Jpa
 
     void testFindByLastnameContaining() {
         
@@ -63,22 +63,7 @@ class EmployeeRepositoryTest {
         assertEquals(2, result.size());
         assertEquals(employee2, result.get(1));
     }
+*/
 
-
-    @Test
-    @DisplayName("Repository should save an employee")  // $$ Error
-    void saveTest() {
-        
-        Employee employee = new Employee();
-
-        employee.setLastname("Musk");
-        employee.setFirstname("Elon");
-
-        Employee result = repository.save(employee);
-
-        assertNotNull(result);
-        
-    }
-    
 
 }

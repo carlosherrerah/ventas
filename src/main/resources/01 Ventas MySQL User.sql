@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS VENTAS;
+CREATE DATABASE IF NOT EXISTS ventas;
 
--- drop user 'ventas'@'localhost';
+-- drop user 'ventas'@'localhost';     sensible a Mayusculas
 
-CREATE USER 'ventas'@'localhost' IDENTIFIED BY 'ventas';
+CREATE USER 'ventas'@'%' IDENTIFIED BY 'ventas';
 
-GRANT ALL PRIVILEGES ON VENTAS.* TO 'ventas'@'localhost';
+GRANT ALL PRIVILEGES ON ventas.* TO 'ventas'@'%';
 

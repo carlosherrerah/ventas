@@ -26,6 +26,12 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping("saludo")
+    @ResponseStatus(HttpStatus.OK)
+    public String saludar() {
+        return "Hello world";
+    }
+
     @Operation(summary = "Obtiene la lista de todos los empleados", description = "No requiere parámetros", responses = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Lista de empleados") })
     @GetMapping

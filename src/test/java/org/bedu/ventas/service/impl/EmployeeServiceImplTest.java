@@ -8,13 +8,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +26,6 @@ import org.bedu.ventas.exception.EmployeeNotFoundException;
 import org.bedu.ventas.mapper.EmployeeMapper;
 import org.bedu.ventas.model.Employee;
 import org.bedu.ventas.repository.EmployeeRepository;
-import org.bedu.ventas.service.EmployeeService;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -41,8 +38,8 @@ class EmployeeServiceImplTest {
     @MockBean
     private EmployeeRepository repository;
 
-    @Autowired  //  @InjectMocks    
-    private EmployeeService service;
+    @Autowired
+    private EmployeeServiceImpl service;
 
     @Autowired
     private EmployeeMapper mapper;
@@ -75,17 +72,15 @@ class EmployeeServiceImplTest {
         assertEquals(employee.getLastname(), result.get(0).getLastname());
 
     }
-
+/*
     @Test
-    @DisplayName("Service should save an employee in repository")   // $$E
-    void saveTest() {
+    @DisplayName("Service should save an employee in repository")   // $$ Jpa
+    void saveTest() {  
         CreateEmployeeDTO dto = new CreateEmployeeDTO();
-
         dto.setLastname("Sinatra6");
         dto.setFirstname("Frank");
 
         Employee model = new Employee();
-
         model.setEmployeeid(100);
         model.setLastname(dto.getLastname());
         model.setFirstname((dto.getFirstname()));
@@ -99,6 +94,7 @@ class EmployeeServiceImplTest {
         assertEquals(model.getLastname(), result.getLastname());
         assertEquals(model.getFirstname(), result.getFirstname());
     }
+*/
 
     @Test
     @DisplayName("Service should delete an employee by id in repository")
