@@ -1,8 +1,10 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.2.0'
+	id 'org.springframework.boot' version '3.2.2'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id "io.freefair.lombok" version "8.4"
+    id 'jacoco'  
+    id "org.sonarqube" version "4.4.1.3373"
 }
 
 group = 'org.bedu'
@@ -23,10 +25,61 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'com.mysql:mysql-connector-j'               // Utiliza la versión adecuada
+	implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.0.Final'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	implementation 'org.modelmapper:modelmapper:2.3.8'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'    
+    testImplementation 'org.mockito:mockito-core:5.9.0'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+
+    // Al finalizar "gradle test" se ejecuta "gradle jacocoTestReport"
+    finalizedBy jacocoTestReport
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+    }
+    afterEvaluate {
+      classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                exclude: [
+                  'org/bedu/ventas/dto/**',
+                  'org/bedu/ventas/model/**',
+                  'org/bedu/ventas/mapper/**',
+                  'org/bedu/ventas/EquipoApplication.class'
+                ]
+            )
+      }))
+    }
+}
+
+// Excluir ciertos paquetes del reporte de coverage
+test {
+    jacoco {
+        excludes = [
+            'org.bedu.ventas.dto.*',
+            'org.bedu.ventas.model.*',
+            'org.bedu.ventas.mapper.*',
+            'org.bedu.ventas.EquipoApplication.class'
+        ]
+    }
+}
+
+// Al ejecutar "gradle sonar" se ejecuta primero 
+// "gradle test" (y a su vez ejecuta "gradle jacocoTestReport")
+tasks.named('sonar') {
+	dependsOn test
 }

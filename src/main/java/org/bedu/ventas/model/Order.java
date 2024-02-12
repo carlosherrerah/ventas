@@ -1,6 +1,5 @@
 package org.bedu.ventas.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -21,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "Orders")
-public class Order implements Serializable{
+public class Order /* implements Serializable */{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderid")
@@ -29,7 +28,7 @@ public class Order implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employeeid")
-    private Employee employee;
+    private Employee employee;  // transient
 
     @Temporal(TemporalType.DATE)
     private Date orderdate;
